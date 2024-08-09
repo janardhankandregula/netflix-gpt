@@ -1,5 +1,13 @@
+import Body from "./components/Body";
+import Header from "./components/Header";
+import Login from "./components/Login";
+
 function App() {
-  return <div className="text-green-600">welcome netflix gpt</div>;
+  return (
+    <div>
+      <Body />
+    </div>
+  );
 }
 
 export default App;
