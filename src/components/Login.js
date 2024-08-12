@@ -1,12 +1,32 @@
 import React, { useRef } from "react";
 import Header from "./Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { initializeApp } from "firebase/app";
+import { auth } from "../utilis/firebase";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+} from "firebase/auth";
+
+import { addUser, removeUser } from "../utilis/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Browse from "./Browse";
+import { bgImage } from "../utilis/constants";
 
 const Login = () => {
   const [signIn, setSignIn] = useState(true);
   const [nameValid, setnameValid] = useState(true);
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setpasswordValid] = useState(true);
+
+  const auth = getAuth();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleSignIn = () => {
     setSignIn(!signIn);
@@ -22,20 +42,18 @@ const Login = () => {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     const nameRegex = /([a-zA-Z0-9_\s]+)/;
 
-    if (!emailRegex.test(emailRef.current.value)) {
-      setEmailValid(false);
-      //return "Email is not valid";
+    if (!emailRegex.test(emailRef?.current?.value)) {
+      setEmailValid(!emailValid);
     } else {
       setEmailValid(true);
     }
 
-    if (!passwordRegex.test(passwordRef.current.value)) {
+    if (!passwordRegex.test(passwordRef?.current?.value)) {
       setpasswordValid(false);
-      //return "Password is not valid";
     } else {
       setpasswordValid(true);
     }
-    if (!nameRegex.test(nameRef.current.value)) {
+    if (!nameRegex.test(nameRef?.current?.value)) {
       setnameValid(false);
     } else {
       setnameValid(true);
@@ -44,34 +62,130 @@ const Login = () => {
   };
 
   const handleClick = () => {
-    const validationResult = validate(emailRef, passwordRef);
-    // console.log(result);
-    // if (validationResult) {
-    //   console.log(validationResult); // Output validation error message
-    // }
-    // else {
-    //   console.log("Email and password are valid");
-    // }
+    if (signIn) {
+      validate(emailRef, passwordRef);
+      if (!emailValid || !passwordValid || !nameValid) {
+        console.log("Please fix validation errors before signing up.");
+        return;
+      }
+
+      signInWithEmailAndPassword(
+        auth,
+        emailRef.current.value,
+        passwordRef.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          dispatch(
+            addUser({
+              email: user.email,
+              uid: user.uid,
+            })
+          );
+          navigate("/Browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          console.log(errorCode);
+          const errorMessage = error.message;
+          console.log(errorMessage);
+        });
+      if (emailRef.current && passwordRef.current) {
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+      }
+    } else {
+      validate(emailRef, passwordRef);
+
+      createUserWithEmailAndPassword(
+        auth,
+        emailRef.current.value,
+        passwordRef.current.value
+      )
+        .then(async (userCredential) => {
+          const user = userCredential.user;
+          const updatedUser = auth.currentUser;
+
+          await updateProfile(updatedUser, {
+            displayName: nameRef.current.value,
+            photoURL: "https://example.com/jane-q-user/profile.jpg",
+          });
+          await updatedUser.reload();
+
+          dispatch(
+            addUser({
+              email: updatedUser.email,
+              uid: updatedUser.uid,
+              name: updatedUser.displayName,
+              photo: updatedUser.photoURL,
+            })
+          );
+          navigate("/Browse");
+          //console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        });
+    }
+    if (emailRef.current && passwordRef.current && nameRef.current) {
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+      nameRef.current.value = "";
+    }
+  };
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      navigate("/browse");
+    }
+  }, [auth, navigate]);
+
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       navigate("/browse");
+  //     }
+  //   });
+  //   return () => unsubscribe(); // Clean up subscription on unmount
+  // }, [auth, navigate]);
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
   };
 
   return (
     <div className="relative">
       <Header />
       <div>
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_large.jpg"
-          alt="Des"
-        />
+        <img src={bgImage} alt="Des" />
       </div>
       <form
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSignUp}
         className="p-12  w-4/12 absolute top-20 left-1/2 transform -translate-x-1/2 mt-28 bg-black  bg-opacity-85 text-white"
       >
         <div className="flex flex-col">
           <label className="p-2 m-2 text-white font-bold text-4xl">
             {signIn ? "Sign In" : "Sign Up"}
           </label>
-          {signIn ? null : (
+          {/* {signIn ? null : (
+            <>
+              <input
+                ref={nameRef}
+                type="text"
+                placeholder="Full name"
+                className="p-2 m-2 h-14 bg-slate-500 bg-opacity-30 rounded-md"
+              />
+              {!nameValid && (
+                <p className="ml-2 text-sm text-red-600">
+                  Full name is required
+                </p>
+              )}
+            </>
+          )} */}
+          {!signIn && (
             <>
               <input
                 ref={nameRef}
@@ -88,7 +202,7 @@ const Login = () => {
           )}
           <input
             ref={emailRef}
-            type="text"
+            type="email"
             placeholder="Email or Mobile number"
             className="p-2 m-2 h-14 bg-slate-500 bg-opacity-30 rounded-md"
           />

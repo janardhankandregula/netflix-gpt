@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "./Login";
-import Header from "./Header";
+
 import Browse from "./Browse";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import ProtectedRoute from "./ProtectedRoute";
+import NavRoute from "./NavRoute";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
     {
       path: "/",
-      element: <Login />,
+
+      element: (
+        <NavRoute>
+          <Login />
+        </NavRoute>
+      ),
     },
     {
       path: "/browse",
-      element: <Browse />,
+
+      element: (
+        <ProtectedRoute>
+          <Browse />
+        </ProtectedRoute>
+      ),
     },
   ]);
   return (
