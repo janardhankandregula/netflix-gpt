@@ -157,7 +157,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative">
+    <div>
       <Header />
       <div>
         <img src={bgImage} alt="Des" />
