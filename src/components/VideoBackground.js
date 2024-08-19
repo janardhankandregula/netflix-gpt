@@ -9,12 +9,12 @@ import Header from "./Header";
 const VideoBackground = ({ movieId }) => {
   useTrailerVideo(movieId);
   const video = useSelector((store) => store.movie.videoTrailer);
-  // console.log(video.key);
+  console.log(video);
 
   return (
     <div>
       <iframe
-        className=" absolute w-full aspect-video"
+        className="w-full aspect-video"
         src={
           "https://www.youtube.com/embed/Idh8n5XuYIA?" +
           video?.key +

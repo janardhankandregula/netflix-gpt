@@ -9,6 +9,10 @@ export const API_CONST = {
   headers: {
     accept: "application/json",
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzhjOTQ5YTc3ODU3ZTc3MzZhMzI1MDhiMzFhMWEzZCIsIm5iZiI6MTcyMzQzODIwNi4wMzI5MzksInN1YiI6IjY2Yjk5MTNmMzUzYjQyNmNjMTVmNmJjOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K9VOIrP_m9Yc57WLOgeoWHVA69E0xsHS7WWqBIhTrtM",
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMzhjOTQ5YTc3ODU3ZTc3MzZhMzI1MDhiMzFhMWEzZCIsIm5iZiI6MTcyMzYyOTAzMC4zMzI4NjEsInN1YiI6IjY2Yjk5MTNmMzUzYjQyNmNjMTVmNmJjOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KOPLyNONJzOpAMrTPsPwZxM79Hw-jYDptAbYTYbX5OE",
   },
 };
+export const img_path = "https://image.tmdb.org/t/p/w200";
+
+export const OPEN_AI_GPT_KEY =
+  "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";

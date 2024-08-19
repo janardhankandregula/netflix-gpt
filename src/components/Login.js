@@ -65,7 +65,7 @@ const Login = () => {
     if (signIn) {
       validate(emailRef, passwordRef);
       if (!emailValid || !passwordValid || !nameValid) {
-        console.log("Please fix validation errors before signing up.");
+        //console.log("Please fix validation errors before signing up.");
         return;
       }
 
@@ -158,7 +158,10 @@ const Login = () => {
 
   return (
     <div>
-      <Header />
+      <div className="absolute">
+        <Header />
+      </div>
+
       <div>
         <img src={bgImage} alt="Des" />
       </div>
