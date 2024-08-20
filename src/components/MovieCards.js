@@ -12,12 +12,12 @@ import {
   setHoverRating,
 } from "../utilis/hoverslice";
 
-const MovieCards = ({ path, title, rating, id }) => {
+const MovieCards = ({ path, title, rating, id, className }) => {
   const dispatch = useDispatch();
 
   return (
     <div
-      className="relative flex-shrink-0 w-40 h-60 overflow-hidden rounded-lg bg-gray-900 transition-transform transform hover:scale-105"
+      className={`relative flex-shrink-0 w-40 h-60 overflow-hidden rounded-lg bg-gray-900 transition-transform transform hover:scale-105 ${className}`}
       onMouseEnter={() => {
         dispatch(sethoverToggle());
         dispatch(sethoverId(id));

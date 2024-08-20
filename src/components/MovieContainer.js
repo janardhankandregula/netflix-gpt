@@ -25,7 +25,7 @@ const MovieContainer = () => {
   const rating = useSelector((state) => state?.hover?.hoverRating);
   return (
     <div className="relative bg-black">
-      <div className="flex overflow-hidden space-x-10 p-4 ml-4 mr-4 mb-4 relative -top-40">
+      <div className="flex overflow-x-auto p-2 ml-2 mr-2 mb-2 md:space-x-10 md:p-4 md:ml-4 md:mr-4 md:mb-4 relative md:-top-40 space-x-4 md:mt-20">
         {newMovies?.map((movieImg) => {
           console.log(movieImg);
           return (
@@ -34,36 +34,45 @@ const MovieContainer = () => {
               title={movieImg?.original_title}
               rating={movieImg?.vote_average}
               id={movieImg?.id}
+              className="w-24 md:w-40 md:h-auto h-auto"
             />
           );
         })}
       </div>
-      <div className="relative">
-        <div className="flex overflow-hidden space-x-10 p-4 m-4 -mt-36">
-          {popularMovies?.map((movieImg) => {
-            return (
-              <MovieCards
-                path={movieImg?.poster_path}
-                title={movieImg?.original_title}
-                rating={movieImg?.vote_average}
-                id={movieImg?.id}
-              />
-            );
-          })}
+      {/* <div className="relative top-10 h-auto"> */}
+      {/* <div>
+        <div className="flex overflow-x-auto md:space-x-10 md:p-4 md:m-4 md:-mt-44 space-x-4 p-2 ml-2 mr-2 mb-2 h-auto -top-40"> */}
+
+      <div className="overflow-x-auto p-2 ml-2 mr-2  md:p-4 md:ml-4 md:mr-4 md:mb-4 md:-mt-44">
+        <div className="flex space-x-4 md:space-x-6 mt-0">
+          {popularMovies?.map((movieImg) => (
+            <MovieCards
+              path={movieImg?.poster_path}
+              title={movieImg?.original_title}
+              rating={movieImg?.vote_average}
+              id={movieImg?.id}
+              className="w-24 md:w-40 md:h-auto h-auto"
+            />
+          ))}
         </div>
-        <div className="flex overflow-hidden space-x-10 p-4  m-4">
-          {TopRatedMovies?.map((movieImg) => {
-            return (
-              <MovieCards
-                path={movieImg?.poster_path}
-                title={movieImg?.original_title}
-                rating={movieImg?.vote_average}
-                id={movieImg?.id}
-              />
-            );
-          })}
-        </div>
-        <div className="flex overflow-hidden space-x-10 p-4 m-4">
+      </div>
+
+      {/* <div className="flex overflow-x-auto  space-x-10 p-4  m-4">
+        {TopRatedMovies?.map((movieImg) => {
+          return (
+            <MovieCards
+              path={movieImg?.poster_path}
+              title={movieImg?.original_title}
+              rating={movieImg?.vote_average}
+              id={movieImg?.id}
+              className="w-32 md:w-40 md:h-auto h-auto"
+            />
+          );
+        })}
+      </div> */}
+      {/* <div className="flex overflow-x-auto  md:space-x-10 md:p-4 md:m-4 space-x-4 p-2 m-2"> */}
+      <div className="overflow-x-auto p-2 ml-2 mr-2 md:space-x-10 md:p-4 md:m-4">
+        <div className="flex space-x-4 md:space-x-6">
           {upComingMovies?.map((movieImg) => {
             return (
               <MovieCards
@@ -71,16 +80,19 @@ const MovieContainer = () => {
                 title={movieImg?.original_title}
                 rating={movieImg?.vote_average}
                 id={movieImg?.id}
+                className="w-24 md:w-40 md:h-auto h-auto"
               />
             );
           })}
         </div>
       </div>
-      {hoverStete && (
+
+      {/* </div> */}
+      {/* {hoverStete && (
         <div className="absolute bg-black text-white top-28 right-28 w-auto h-auto">
           <TrailerContainer test={id} mveTitle={title} rat={rating} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

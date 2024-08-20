@@ -55,11 +55,15 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full bg-gradient-to-b from-black flex justify-between z-20">
+    <div className="w-full bg-gradient-to-b from-black flex flex-col justify-between z-20 md:flex-row">
       <div>
-        <img className="w-44 py-2 px-8 " src={logo} alt="logo" />
+        <img
+          className="w-44 py-2 px-8 mx-auto bg-gradient-to-b from-black"
+          src={logo}
+          alt="logo"
+        />
       </div>
-      <div>
+      <div className="flex justify-center -m-4 md:m-0 md:mr-4">
         {user && (
           <>
             {gptButton ? (
@@ -68,7 +72,8 @@ const Header = () => {
               <div className="relative inline-block text-left">
                 <button
                   onClick={toggleDropdown}
-                  className="bg-blue-950 py-2 px-4 m-4 rounded-lg text-white font-bold hover:bg-blue-500"
+                  className="bg-blue-950 py-1 px-3 text-sm m-4 rounded-lg text-white font-bold hover:bg-blue-500 
+    md:py-2 md:px-4 md:text-base"
                 >
                   {selectedLanguage}
                 </button>
@@ -78,7 +83,7 @@ const Header = () => {
                       {["Hindi", "English", "Telugu"].map((language) => (
                         <li key={language}>
                           <button
-                            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                            className="block w-full text-left py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
                             onClick={() => handleLanguageSelect(language)}
                           >
                             {language}
@@ -92,14 +97,16 @@ const Header = () => {
             )}
 
             <button
-              className="bg-blue-950 py-2 px-4 m-4 rounded-lg text-white font-bold  hover:bg-blue-500"
+              className="bg-blue-950 py-1 px-3 text-sm m-4 rounded-lg text-white font-bold hover:bg-blue-500 
+    md:py-2 md:px-4 md:text-base"
               onClick={toggleGpt}
             >
               {/* GPT Search */}
               {gptButton ? "GPT Search" : "Home"}
             </button>
             <button
-              className="bg-blue-950 py-2 px-4 m-4 rounded-lg text-white font-bold hover:bg-blue-500"
+              className="bg-blue-950 py-1 px-3 text-sm m-4 rounded-lg text-white font-bold hover:bg-blue-500 
+    md:py-2 md:px-4 md:text-base"
               onClick={handleSignOut}
             >
               sign-out

@@ -16,7 +16,7 @@ const MainContainer = () => {
   return (
     <div className="relative">
       <VideoBackground movieId={id} />
-      <div className="absolute top-0 left-0 py-[11.5%] px-32 text-white bg-gradient-to-r from-black">
+      <div className="absolute md:top-0 md:left-0 md:py-[11.5%] md:px-32 top-0 left-0 py-[25%] px-3 text-white bg-gradient-to-r from-black">
         <VideoTitle title={original_title} overview={overview} />
       </div>
     </div>

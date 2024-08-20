@@ -158,19 +158,23 @@ const Login = () => {
 
   return (
     <div>
-      <div className="absolute">
+      <div className="absolute w-full">
         <Header />
       </div>
 
       <div>
-        <img src={bgImage} alt="Des" />
+        <img
+          src={bgImage}
+          alt="Des"
+          className="md:object-cover md:w-full md:h-full w-screen h-screen object-cover"
+        />
       </div>
       <form
         onSubmit={handleSignUp}
-        className="p-12  w-4/12 absolute top-20 left-1/2 transform -translate-x-1/2 mt-28 bg-black  bg-opacity-85 text-white"
+        className=" p-6 md:p-12 w-auto md:w-4/12 absolute md:top-20 top-8 left-1/2 transform -translate-x-1/2 mt-28 bg-black  bg-opacity-85 text-white rounded-lg"
       >
         <div className="flex flex-col">
-          <label className="p-2 m-2 text-white font-bold text-4xl">
+          <label className="md:p-2 md:m-2 text-white font-bold md:text-4xl p-1 m-1 text-lg">
             {signIn ? "Sign In" : "Sign Up"}
           </label>
           {/* {signIn ? null : (
@@ -194,7 +198,7 @@ const Login = () => {
                 ref={nameRef}
                 type="text"
                 placeholder="Full name"
-                className="p-2 m-2 h-14 bg-slate-500 bg-opacity-30 rounded-md"
+                className="md:p-2 md:m-2 md:h-14 p-1 m-1 h-7 bg-slate-500 bg-opacity-30 rounded-md"
               />
               {!nameValid && (
                 <p className="ml-2 text-sm text-red-600">
@@ -207,7 +211,7 @@ const Login = () => {
             ref={emailRef}
             type="email"
             placeholder="Email or Mobile number"
-            className="p-2 m-2 h-14 bg-slate-500 bg-opacity-30 rounded-md"
+            className="md:p-2 md:m-2 md:h-14 p-1 m-1 h-7 bg-slate-500 bg-opacity-30 rounded-md"
           />
           {/* {isValid ? (
             ""
@@ -221,7 +225,7 @@ const Login = () => {
             ref={passwordRef}
             type="password"
             placeholder="password"
-            className="p-2 m-2 h-14 bg-slate-500 bg-opacity-30 rounded-md"
+            className="md:p-2 md:m-2 md:h-14 p-1 m-1 h-7 bg-slate-500 bg-opacity-30 rounded-md"
           />
           {/* {passwordValid ? (
             ""
@@ -233,7 +237,7 @@ const Login = () => {
           )}
           <button
             onClick={handleClick}
-            className="px-4 py-2 m-4 bg-red-600 text-white font-bold text-lg rounded-md"
+            className="md:px-4 md:py-2 md:m-4 py-1 m-2 w-20 ml-10 bg-red-600 text-white font-bold md:text-lg text-sm rounded-md"
           >
             {signIn ? "Sign-In" : "Sign-up"}
           </button>
